@@ -16,6 +16,10 @@
 *.gch
 *.pch
 
+#Build directory
+build/
+Build/
+
 # Libraries
 *.lib
 *.a
