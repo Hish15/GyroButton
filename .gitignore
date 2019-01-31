@@ -19,6 +19,12 @@
 #Build directory
 build/
 Build/
+lib/
+
+#CMake output
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
 
 # Libraries
 *.lib
