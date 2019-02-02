@@ -5,7 +5,6 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE "STATIC_LIBRARY")
 set(MCU_FAMILY STM32F4xx)
 set(MCU_LINE STM32F429xx)
 
-cmake_minimum_required(VERSION 3.6)
 
 add_definitions(-D${MCU_LINE})
 
@@ -61,6 +60,13 @@ set_source_files_properties(startup_stm32f429xx.s PROPERTIES COMPILE_FLAGS "-x a
 
 set(SOURCE_FILES ${USER_SOURCES} ${MCU_LINKER_SCRIPT})
 
+set(STM32F4_FLAGS "-mcpu=cortex-m4 -mthumb -mno-thumb-interwork -mfpu=vfp -msoft-float")
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${STM32F4_FLAGS}" CACHE STRING "compile flags C" FORCE)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall --std=c++11 ${STM32F4_FLAGS}" CACHE STRING "compile flags" FORCE)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --specs=rdimon.specs")
+
+file(MAKE_DIRECTORY build)
 add_executable(${PROJECT_NAME}.elf ${SOURCE_FILES})
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Map=${PROJECT_SOURCE_DIR}/build/${PROJECT_NAME}.map")
